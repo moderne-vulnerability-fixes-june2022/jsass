@@ -1,6 +1,7 @@
 package io.bit3.jsass.adapter;
 
 import java.io.File;
+import java.nio.file.Files;
 
 /**
  * This loader handle the extraction and loading of the shared library files from the jar.
@@ -12,9 +13,7 @@ final class NativeTestLoader {
   public static void loadTestLibrary() {
     try {
       File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-      File dir = File.createTempFile("libjsass-", ".d", tmpDir);
-      dir.delete();
-      dir.mkdir();
+      File dir = Files.createTempDirectory(tmpDir.toPath(), "libjsass-" + ".d").toFile();
       dir.deleteOnExit();
 
       if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
